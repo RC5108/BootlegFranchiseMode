@@ -16,7 +16,7 @@ Player::Player(string n, int spd, int num, int ovr, string pos) {
 }
 Player::Player(string n, int spd, int num, int ovr, int g, int a, int pim, int h, int gp, string pos) {
     name = n;
-    speed = spd; 
+    speed = spd;
     number = num;
     overall = ovr;
     goals = g;
@@ -50,7 +50,7 @@ Player::Player() {
     hits = 0;
     gamesPlayed = 0;
 }
-void Player::displayStats() const{
+void Player::displayStats() const {
     cout << "Player: #" << number << " " << name << ", Overall: " << overall << "Speed: " << speed << " : " << endl;
 }
 

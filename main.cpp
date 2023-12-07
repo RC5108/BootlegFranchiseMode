@@ -60,9 +60,7 @@ void inSeasonMenu(Team& team) {
 			break;
 		case 5:
 			cout << "Team Stats:" << endl;
-			for (const Player& player : team.getPlayers()) {
-				cout << player.getStats() << endl;
-			}
+			team.displayTeam();
 			break;
 		case 6:
 			cout << "You have exited the current season" << endl;
@@ -91,10 +89,10 @@ int main() {
 	Team userTeam;
 	ifstream inFile;
 	// Non-user opponents 
-	saveTeamData(folderPath+"blueTeam_data.txt", blueTeam);
-	saveTeamData(folderPath+"greenTeam.txt", greenTeam);
-	saveTeamData(folderPath+"redTeam.txt", redTeam);
-	
+	saveTeamData(folderPath + "blueTeam_data.txt", blueTeam);
+	saveTeamData(folderPath + "greenTeam.txt", greenTeam);
+	saveTeamData(folderPath + "redTeam.txt", redTeam);
+
 	// Main menu that the user can select options from
 	while (cont) {
 		cout << "-------------------" << endl;
@@ -105,14 +103,14 @@ int main() {
 		// User selection if they wish to create a new team or load one from a txt file
 		cout << "Enter an option: " << endl;
 		cin >> option;
-		
+
 		switch (option) {
 		case 1:
 			cout << "You have selected create a new team." << endl;
 			cout << "Enter your team name: " << endl;
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			getline(cin, userTeamName);
-			fileName = folderPath + userTeamName + ".txt"; 
+			fileName = folderPath + userTeamName + ".txt";
 			saveTeamData(fileName, userTeam);
 			inSeasonMenu(userTeam);
 			break;
@@ -141,7 +139,7 @@ int main() {
 			break;
 		}
 	}
-	
+
 
 	return 0;
 }

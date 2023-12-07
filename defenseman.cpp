@@ -5,7 +5,7 @@ Defenseman::Defenseman(string n, int spd, int num, int ovr, int g, int a, int pi
     Player(n, spd, num, ovr, g, a, pim, h, gp, "Defenseman") {};
 Defenseman::Defenseman() : Player("Defenseman") {};
 
-void Defenseman::displayStats() const{
+void Defenseman::displayStats() const {
     Player::displayStats();
     cout << "Goals : " << goals << ", Assists: " << assists << ", Points: " << points;
     cout << "PIM: " << pim << ", Hits : " << hits << endl;

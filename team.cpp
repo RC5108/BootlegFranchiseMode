@@ -20,20 +20,20 @@ Team::Team(Forward f[], Defenseman d[], Goalie g) {
 
 Team::Team() {
     for (int i = 0; i < 6; ++i) {
-        Forward forward; 
+        Forward forward;
         forward.setNumber(RandomName::generateUniqueNumber(existingNumber));
         existingNumber.insert(forward.getNumber());
         forwards[i] = forward;
         players.push_back(forward);
     }
     for (int i = 0; i < 4; ++i) {
-        Defenseman defenseman; 
+        Defenseman defenseman;
         defenseman.setNumber(RandomName::generateUniqueNumber(existingNumber));
         existingNumber.insert(defenseman.getNumber());
         defensemen[i] = defenseman;
         players.push_back(defenseman);
     }
-    Goalie newGoalie; 
+    Goalie newGoalie;
     newGoalie.setNumber(RandomName::generateUniqueNumber(existingNumber));
     existingNumber.insert(newGoalie.getNumber());
     goalie = newGoalie;
@@ -55,7 +55,7 @@ void Team::displayTeam() {
     goalie.displayStats();
 }
 
-void Team::saveToFile(std::ofstream& outFile) const{
+void Team::saveToFile(std::ofstream& outFile) const {
     for (auto& forward : forwards) {
         forward.saveToFile(outFile);
     }

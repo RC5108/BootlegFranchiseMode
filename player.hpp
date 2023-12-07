@@ -34,7 +34,8 @@ public:
     Player(string n, int spd, int num, int ovr, string pos);
     Player(string pos);
     Player();
-    
+
+
     virtual void displayStats() const;
     virtual void saveToFile(ofstream& outFile) const;
     void setNumber(int num) {
@@ -57,10 +58,10 @@ public:
             << ", Speed: " << speed << ", Games Played: " << gamesPlayed;
         return ss.str();
     }
-    virtual string getType()  { return "Player "; }
+    virtual string getType() { return "Player "; }
 
 
-    
+
 };
 
 #endif // PLAYER_HPP
