@@ -2,6 +2,7 @@
 #include "randomname.hpp"
 // Constructor that builds the users team 
 Team::Team(Forward f[], Defenseman d[], Goalie g) {
+    schedule.generateSchedule();
     for (int i = 0; i < 6; ++i) {
         forwards[i] = f[i];
         players.push_back(forwards[i]);
@@ -19,6 +20,7 @@ Team::Team(Forward f[], Defenseman d[], Goalie g) {
 
 
 Team::Team() {
+    schedule.generateSchedule();
     for (int i = 0; i < 6; ++i) {
         Forward forward;
         forward.setNumber(RandomName::generateUniqueNumber(existingNumber));
@@ -79,4 +81,8 @@ void Team::addPlayer(Player& player) {
     player.setNumber(uniqueNumber);
     existingNumber.insert(uniqueNumber);
     players.push_back(player);
+}
+
+void Team::viewUpcomingGames(int numOfGames) {
+    schedule.printUpcomingGames(numOfGames);
 }

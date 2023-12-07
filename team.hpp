@@ -4,6 +4,7 @@
 #include "forward.hpp"
 #include "defenseman.hpp"
 #include "goalie.hpp"
+#include "schedule.hpp"
 #include <set>
 #include <vector>
 #include <memory>
@@ -16,6 +17,7 @@ protected:
     Goalie goalie;
     vector<Player> players;
     std::set<int> existingNumber;
+    Schedule schedule;
 
 public:
     Team(Forward f[], Defenseman d[], Goalie g);
@@ -25,6 +27,7 @@ public:
     void saveToFile(std::ofstream& outFile) const;
     void initializePlayers();
     void addPlayer(Player& player);
+    void viewUpcomingGames(int numOfGames);
     vector<Player> getPlayers() const {
         return players;
     }

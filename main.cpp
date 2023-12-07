@@ -8,6 +8,7 @@ Program that simulates what it takes to be a General Manager of a hockey team
 #include <chrono>
 #include <thread>
 #include "team.hpp"
+#include "schedule.hpp"
 
 using namespace std;
 
@@ -48,6 +49,7 @@ void inSeasonMenu(Team& team) {
 		case 1:
 			break;
 		case 2:
+			team.viewUpcomingGames(3);
 			break;
 		case 3:
 			break;
@@ -93,6 +95,9 @@ int main() {
 	saveTeamData(folderPath + "greenTeam.txt", greenTeam);
 	saveTeamData(folderPath + "redTeam.txt", redTeam);
 
+
+	cout << "Bootleg Franchise Mode" << endl;
+	cout << "Version 23.12.6" << endl;
 	// Main menu that the user can select options from
 	while (cont) {
 		cout << "-------------------" << endl;
