@@ -47,13 +47,16 @@ void inSeasonMenu(Team& team) {
 		cin >> option;
 		switch (option) {
 		case 1:
+			team.simulateNextGame();
 			break;
 		case 2:
+			// Will display the next 3 games on the schedule
 			team.viewUpcomingGames(3);
 			break;
 		case 3:
 			break;
 		case 4:
+			// Display the entire roster with the players position
 			cout << "Team Roster:" << endl;
 			for (const Player& player : team.getPlayers()) {
 				cout << player.getPosition() << " " << player.getName();
@@ -90,6 +93,7 @@ int main() {
 	Team redTeam;
 	Team userTeam;
 	ifstream inFile;
+
 	// Non-user opponents 
 	saveTeamData(folderPath + "blueTeam_data.txt", blueTeam);
 	saveTeamData(folderPath + "greenTeam.txt", greenTeam);

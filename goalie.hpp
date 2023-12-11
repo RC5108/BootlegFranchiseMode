@@ -19,6 +19,8 @@ public:
     int getLosses() const { return losses; }
     int getTies() const { return ties; }
     string getType() const { return "Goalie"; }
+
+
 protected:
     int saves;
     double savePercentage;

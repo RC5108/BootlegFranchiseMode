@@ -10,10 +10,13 @@
 #include <memory>
 #include "randomname.hpp"
 
+const int NUM_FORWARDS = 6;
+const int NUM_DEFENSEMAN = 4;
+const int NUM_GOALIES = 1;
 class Team {
 protected:
-    Forward forwards[6];
-    Defenseman defensemen[4];
+    Forward forwards[NUM_FORWARDS];
+    Defenseman defensemen[NUM_DEFENSEMAN];
     Goalie goalie;
     vector<Player> players;
     std::set<int> existingNumber;
@@ -28,6 +31,12 @@ public:
     void initializePlayers();
     void addPlayer(Player& player);
     void viewUpcomingGames(int numOfGames);
+    // Simulate the next game on the schedule
+    void simulateNextGame();
+    // Get how many goals are scored in a game
+    int getGameGoals();
+    //
+    void updatePlayerStats(int teamGoalsScored);
     vector<Player> getPlayers() const {
         return players;
     }

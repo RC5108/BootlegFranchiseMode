@@ -46,3 +46,18 @@ void Schedule::printUpcomingGames(int numOfGames) {
         count++;
     }
 }
+
+
+void Schedule::markGameAsPlayed() {
+    if (head != nullptr && !head->played) {
+        head->played = true;
+    }
+}
+
+void Schedule::removeNextGame() {
+    if (head != nullptr) {
+        GameNode* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}

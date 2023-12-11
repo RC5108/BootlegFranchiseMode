@@ -86,3 +86,107 @@ void Team::addPlayer(Player& player) {
 void Team::viewUpcomingGames(int numOfGames) {
     schedule.printUpcomingGames(numOfGames);
 }
+
+void Team::simulateNextGame() {
+    int userScore = getGameGoals();
+    int oppScore = getGameGoals();
+
+    if (userScore > oppScore) {
+        cout << "You won the game! Score: " << userScore << "-" << oppScore << endl;
+        // Update stats for win
+        updatePlayerStats(userScore);
+        schedule.markGameAsPlayed();
+        schedule.removeNextGame();
+    }
+    else if (userScore < oppScore) {
+        cout << "You lost the game. Score: " << userScore << "-" << oppScore << endl;
+        // Update stats for loss
+        updatePlayerStats(userScore);
+        schedule.markGameAsPlayed();
+        schedule.removeNextGame();
+    }
+    else {
+        cout << "The game was a draw. Score: " << userScore << "-" << oppScore << endl;
+        // Update stats for draw
+        updatePlayerStats(userScore);
+        schedule.markGameAsPlayed();
+        schedule.removeNextGame();
+    }
+    
+}
+
+//pre: function to get the number of goals scored in a game
+//post: return the number of goals scored by one team
+int Team::getGameGoals() {
+    int gameGoals = rand() % 100;
+    int teamScore;
+
+    if (gameGoals < 10) {
+        teamScore = 1;
+    }
+    else if (gameGoals >= 10 && gameGoals < 20) {
+        teamScore = 2;
+    }
+    else if (gameGoals >= 20 && gameGoals < 35) {
+        teamScore = 3;
+    }
+    else if (gameGoals >= 35 && gameGoals < 50) {
+        teamScore = 4;
+    }
+    else if (gameGoals >= 50 && gameGoals < 65) {
+        teamScore = 5;
+    }
+    else if (gameGoals >= 65 && gameGoals < 75) {
+        teamScore = 6;
+    }
+    else if (gameGoals >= 75 && gameGoals < 80) {
+        teamScore = 7;
+    }
+    else if (gameGoals >= 80 && gameGoals < 85) {
+        teamScore = 8;
+    }
+    else {
+        teamScore = 0;
+    }
+
+    return teamScore;
+}
+
+
+//pre: function that is called after a game with the amount of goals the team scored
+//post: updated player stats incl: goals, assists, gamesplayed after the game
+void Team::updatePlayerStats(int teamGoalsScored) {
+
+    int goalsDistributed = 0;
+
+    // Distribute goals among players
+    while (goalsDistributed < teamGoalsScored) {
+        // 65% chance of a forward scoring
+        if ((rand() % 100) < 65) {
+            int randForward = rand() % NUM_FORWARDS;
+            forwards[randForward].incrementGoals(1);
+        }
+        else {
+            int randDefenseman = rand() % NUM_DEFENSEMAN;
+            defensemen[randDefenseman].incrementGoals(1);
+        }
+        goalsDistributed++;
+    }
+
+    // Randomly assign assists
+    for (int i = 0; i < teamGoalsScored; i++) {
+        int randAssists = rand() % 3;
+        for (int j = 0; j < randAssists; j++) {
+            if ((rand() % 100) < 55) { // 55% chance to assign assist to a forward
+                int randForward = rand() % NUM_FORWARDS;
+                forwards[randForward].incrementAssists(1);
+            }
+            else {
+                int randDefenseman = rand() % NUM_DEFENSEMAN;
+                defensemen[randDefenseman].incrementAssists(1);
+            }
+        }
+    }
+  
+    goalie.displayStats();
+}

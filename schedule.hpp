@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <numeric>
 #include <iomanip>
 using namespace std;
 
@@ -11,9 +12,10 @@ using namespace std;
 struct GameNode {
     string opponent;
     string date;
+    bool played;
     GameNode* next;
 
-    GameNode(string opp, string dt, GameNode* nextNode = nullptr) {
+    GameNode(string opp, string dt, bool played = false,  GameNode* nextNode = nullptr) {
         opponent = opp;
         date = dt;
         next = nextNode;
@@ -43,6 +45,8 @@ public:
     void addGame(string opponent, int gameNumber);
     void generateSchedule();
     void printSchedule();
+    void markGameAsPlayed();
+    void removeNextGame();
     void printUpcomingGames(int numOfGames);
 };
 

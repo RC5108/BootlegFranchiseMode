@@ -18,6 +18,25 @@ public:
         return ss.str();
     }
     string getType() const { return "Forward"; }
+
+    void incrementGoals(int numGoals) {
+        goals += numGoals;
+    }
+    void incrementAssists(int numAssists) {
+        assists += numAssists;
+    }
+    void incrementGP() {
+        gamesPlayed += 1;
+    }
+    void incrementPoints() {
+        points = goals + assists;
+    }
+    void incrementHits(int numHits) {
+        hits += numHits;
+    }
+    void incrementPIM(int numPIM) {
+        pim += numPIM;
+    }
 };
 
 #endif // FORWARD_HPP
