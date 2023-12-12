@@ -26,7 +26,7 @@ void saveTeamData(const std::string& filename, const Team& team) {
 }
 
 // Function to provide a new menu when the user creates/loads a team
-void inSeasonMenu(Team& team, const string& filepath) {
+void inSeasonMenu(Team& team, const string& filepath, Team& redTeam, Team& blueTeam, Team& greenTeam) {
 	int option;
 	bool cont = true;
 	cout << "Generating team..." << endl;
@@ -57,6 +57,7 @@ void inSeasonMenu(Team& team, const string& filepath) {
 			team.viewUpcomingGames(3);
 			break;
 		case 3:
+			team.displayStandings(team, redTeam, blueTeam, greenTeam);
 			break;
 		case 4:
 			// Display the entire roster with the players position
@@ -91,14 +92,14 @@ int main() {
 	string filepath;
 	string fileName;
 	string userTeamName;
-	Team blueTeam;
-	Team greenTeam;
-	Team redTeam;
+	Team blueTeam("Blue Team");
+	Team greenTeam("Green Team");
+	Team redTeam("Red Team");
 	Team userTeam;
 	ifstream inFile;
 
 	// Non-user opponents 
-	saveTeamData(folderPath + "blueTeam_data.txt", blueTeam);
+	saveTeamData(folderPath + "blueTeam.txt", blueTeam);
 	saveTeamData(folderPath + "greenTeam.txt", greenTeam);
 	saveTeamData(folderPath + "redTeam.txt", redTeam);
 
@@ -122,9 +123,10 @@ int main() {
 			cout << "Enter your team name: " << endl;
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			getline(cin, userTeamName);
+			userTeam.setName(userTeamName);
 			fileName = folderPath + userTeamName + ".txt";
 			saveTeamData(fileName, userTeam);
-			inSeasonMenu(userTeam, fileName);
+			inSeasonMenu(userTeam, fileName, redTeam, blueTeam, greenTeam);
 			break;
 		case 2:
 			cout << "You have selected load team." << endl;
@@ -138,12 +140,14 @@ int main() {
 			inFile.open(filepath);
 			if (inFile.is_open()) {
 				inFile.close();  // Close the file after loading the data
-				inSeasonMenu(userTeam, filepath);
+				inSeasonMenu(userTeam, filepath, redTeam, blueTeam, greenTeam);
 			}
 			else {
 				// Handle the error, such as notifying the user and/or returning to the menu
 				cout << "Failed to open file: " << filepath << endl;
 			}
+
+			
 			break;
 		case 3:
 			cout << "Exiting..." << endl;

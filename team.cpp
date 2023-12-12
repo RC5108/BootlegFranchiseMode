@@ -1,8 +1,9 @@
 #include "team.hpp"
 #include "randomname.hpp"
 // Constructor that builds the users team 
-Team::Team(Forward f[], Defenseman d[], Goalie g) {
+Team::Team(const string& name, Forward f[], Defenseman d[], Goalie g) {
     schedule.generateSchedule();
+    teamName = name;
     for (int i = 0; i < 6; ++i) {
         forwards[i] = f[i];
         players.push_back(forwards[i]);
@@ -19,8 +20,9 @@ Team::Team(Forward f[], Defenseman d[], Goalie g) {
 }
 
 
-Team::Team() {
+Team::Team(const string& name) {
     schedule.generateSchedule();
+    teamName = name;
     for (int i = 0; i < 6; ++i) {
         Forward forward;
         forward.setNumber(RandomName::generateUniqueNumber(existingNumber));
@@ -42,6 +44,29 @@ Team::Team() {
     players.push_back(goalie);
 }
 
+Team::Team() {
+    schedule.generateSchedule();
+    teamName = "User Team";
+    for (int i = 0; i < 6; ++i) {
+        Forward forward;
+        forward.setNumber(RandomName::generateUniqueNumber(existingNumber));
+        existingNumber.insert(forward.getNumber());
+        forwards[i] = forward;
+        players.push_back(forward);
+    }
+    for (int i = 0; i < 4; ++i) {
+        Defenseman defenseman;
+        defenseman.setNumber(RandomName::generateUniqueNumber(existingNumber));
+        existingNumber.insert(defenseman.getNumber());
+        defensemen[i] = defenseman;
+        players.push_back(defenseman);
+    }
+    Goalie newGoalie;
+    newGoalie.setNumber(RandomName::generateUniqueNumber(existingNumber));
+    existingNumber.insert(newGoalie.getNumber());
+    goalie = newGoalie;
+    players.push_back(goalie);
+}
 
 // Function that prints the user's players to the screen
 void Team::displayTeam() {
@@ -64,8 +89,8 @@ void Team::saveToFile(std::ofstream& outFile) const {
     for (auto& defensemen : defensemen) {
         defensemen.saveToFile(outFile);
     }
-
     goalie.saveToFile(outFile);
+
 }
 
 void Team::initializePlayers() {
@@ -98,6 +123,7 @@ void Team::simulateNextGame() {
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
         goalie.recordWin();
+        recordWin();
     }
     else if (userScore < oppScore) {
         cout << "You lost the game. Score: " << userScore << "-" << oppScore << endl;
@@ -106,6 +132,7 @@ void Team::simulateNextGame() {
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
         goalie.recordLoss();
+        recordLoss();
     }
     else {
         cout << "The game was a draw. Score: " << userScore << "-" << oppScore << endl;
@@ -114,6 +141,7 @@ void Team::simulateNextGame() {
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
         goalie.recordTie();
+        recordTie();
     }
     
 }
@@ -232,4 +260,90 @@ void Team::writePlayerStatsToFile(const string filename){
 
     outFile.close();
 
+}
+
+void Team::displayStandings(const Team& userTeam, const Team& redTeam, const Team& blueTeam, const Team& greenTeam) {
+    cout << "Standings: " << endl;
+    vector<TeamData> teams = {
+        {userTeam.getName(), userTeam.getWins(), userTeam.getLosses(), userTeam.getTies()},
+        {"Red Team", redTeam.getWins(), redTeam.getLosses(), redTeam.getTies()},
+        {"Blue Team", blueTeam.getWins(), blueTeam.getLosses(), blueTeam.getTies()},
+        {"Green Team", greenTeam.getWins(), greenTeam.getLosses(), greenTeam.getTies()}
+    };
+
+    sort(teams.begin(), teams.end(), [](const TeamData& a, const TeamData& b) {
+        return a.points > b.points; // sort in descending order of points
+        });
+
+    cout << "Standings:\n";
+    for (const auto& team : teams) {
+        cout << team.name << " - Wins: " << team.wins << ", Losses: " << team.losses << ", Ties: " << team.ties << ", Points: " << team.points << endl;
+    }
+}
+
+
+void Team::loadFromFile(const string& filename) {
+    ifstream inFile(filename);
+    if (!inFile.is_open()) {
+        cerr << "Failed to open file: " << filename << endl;
+        return;
+    }
+
+    // Reset current team data
+    //players.clear();
+    //wins = 0;
+    //losses = 0;
+    //ties = 0;
+    //points = 0;
+
+    // Read data and construct players
+    /*string line;
+    while (getline(inFile, line)) {
+        istringstream iss(line);
+        string token;
+        vector<string> tokens;
+
+        while (getline(iss, token, ',')) {
+            tokens.push_back(token);
+        }
+
+        // Parse and create player objects
+        if (!tokens.empty()) {
+            string playerType = tokens[0];
+            string name = tokens[1];
+            int number = stoi(tokens[2]);
+            int speed = stoi(tokens[3]);
+            int overall = stoi(tokens[4]);
+
+            if (playerType == "Forward" || playerType == "Defenseman") {
+                int gamesPlayed = stoi(tokens[5]);
+                int goals = stoi(tokens[6]);
+                int assists = stoi(tokens[7]);
+                int points = stoi(tokens[8]);
+                int pim = stoi(tokens[9]);
+                int hits = stoi(tokens[10]);
+
+                if (playerType == "Forward") {
+                    Forward f(name, speed, number, overall, goals, assists, pim, hits, gamesPlayed);
+                    addPlayer(f);
+                }
+                else {
+                    Defenseman d(name, speed, number, overall, goals, assists, pim, hits, gamesPlayed);
+                    addPlayer(d);
+                }
+            }
+            else if (playerType == "Goalie") {
+                int saves = stoi(tokens[5]);
+                double savePercentage = stod(tokens[6]);
+                double goalsAgainst = stod(tokens[7]);
+                int wins = stoi(tokens[8]);
+                int losses = stoi(tokens[9]);
+                int ties = stoi(tokens[10]);
+
+                Goalie g(name, speed, number, overall, saves, savePercentage, goalsAgainst, wins, losses, ties);
+                addPlayer(g);
+            }
+        }
+    }*/
+    inFile.close();
 }

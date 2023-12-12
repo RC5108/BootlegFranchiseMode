@@ -2,6 +2,7 @@
 #define GOALIE_HPP
 
 #include "player.hpp"
+#include <iomanip>
 using namespace std;
 
 class Goalie : public Player {
@@ -37,11 +38,12 @@ public:
     void updateGAA() {
         if (gamesPlayed > 0) {
             // GP * 60 because there's 60 minutes in a game
-            goalsAgainstAverage = goalsAgainst / (gamesPlayed*60);
+            goalsAgainstAverage = (goalsAgainst*60) / (gamesPlayed*60);
         }
     }
 
     void updateSavePercentage() {
+        //Highest save% possible is 1%
         double totalShots = goalsAgainst + saves;
         savePercentage = saves / totalShots;
     }

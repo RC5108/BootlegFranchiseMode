@@ -12,7 +12,7 @@
 
 using namespace std;
 
-static std::set<int> existingPlayerNumbers;
+static set<int> existingPlayerNumbers;
 
 class Player {
 protected:
