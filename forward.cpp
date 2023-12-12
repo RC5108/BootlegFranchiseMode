@@ -8,7 +8,7 @@ Forward::Forward() : Player("Forward") {};
 void Forward::displayStats() const {
     Player::displayStats();
     cout << "Goals : " << goals << ", Assists: " << assists << ", Points: " << points;
-    cout << "PIM: " << pim << ", Hits : " << hits << endl;
+    cout << ", PIM: " << pim << ", Hits : " << hits << endl;
 }
 
 void Forward::saveToFile(ofstream& outFile) const {

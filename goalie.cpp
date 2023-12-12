@@ -6,7 +6,7 @@ Goalie::Goalie(string n, int spd, int num, int ovr ,int s, double svp, double ga
 Goalie::Goalie() : Player("Goalie"), saves(0), savePercentage(0), goalsAgainst(0), wins(0), losses(0), ties(0), gamesPlayed(0), goalsAgainstAverage(0) {}
 
 void Goalie::displayStats() const{
-    //Player::displayStats();
+    Player::displayStats();
     cout << "Record: " << wins << "-" << losses << "-" << ties << endl;
     cout << "Save Percent: " << savePercentage << "%" << endl;
     cout << "Goals Against Average: " << goalsAgainstAverage << endl;

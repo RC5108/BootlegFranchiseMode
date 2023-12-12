@@ -12,6 +12,8 @@ Program that simulates what it takes to be a General Manager of a hockey team
 
 using namespace std;
 
+
+
 // Function to save your team to an output file
 void saveTeamData(const std::string& filename, const Team& team) {
 	ofstream outFile(filename);
@@ -24,7 +26,7 @@ void saveTeamData(const std::string& filename, const Team& team) {
 }
 
 // Function to provide a new menu when the user creates/loads a team
-void inSeasonMenu(Team& team) {
+void inSeasonMenu(Team& team, const string& filepath) {
 	int option;
 	bool cont = true;
 	cout << "Generating team..." << endl;
@@ -48,6 +50,7 @@ void inSeasonMenu(Team& team) {
 		switch (option) {
 		case 1:
 			team.simulateNextGame();
+			team.writePlayerStatsToFile(filepath);
 			break;
 		case 2:
 			// Will display the next 3 games on the schedule
@@ -121,7 +124,7 @@ int main() {
 			getline(cin, userTeamName);
 			fileName = folderPath + userTeamName + ".txt";
 			saveTeamData(fileName, userTeam);
-			inSeasonMenu(userTeam);
+			inSeasonMenu(userTeam, fileName);
 			break;
 		case 2:
 			cout << "You have selected load team." << endl;
@@ -135,7 +138,7 @@ int main() {
 			inFile.open(filepath);
 			if (inFile.is_open()) {
 				inFile.close();  // Close the file after loading the data
-				inSeasonMenu(userTeam);
+				inSeasonMenu(userTeam, filepath);
 			}
 			else {
 				// Handle the error, such as notifying the user and/or returning to the menu

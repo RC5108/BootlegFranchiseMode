@@ -48,6 +48,7 @@ public:
     void markGameAsPlayed();
     void removeNextGame();
     void printUpcomingGames(int numOfGames);
+    
 };
 
 

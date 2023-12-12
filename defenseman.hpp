@@ -11,14 +11,15 @@ public:
 
     void displayStats() const override;
     void saveToFile(ofstream& outFile) const;
-    string getStats() const override;
     string getType() const { return "Defenseman"; }
 
     void incrementGoals(int numGoals) {
         goals += numGoals;
+        points += numGoals;
     }
     void incrementAssists(int numAssists) {
         assists += numAssists;
+        points += numAssists;
     }
     void incrementGP() {
         gamesPlayed += 1;

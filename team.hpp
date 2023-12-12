@@ -36,11 +36,11 @@ public:
     // Get how many goals are scored in a game
     int getGameGoals();
     //
-    void updatePlayerStats(int teamGoalsScored);
+    void updatePlayerStats(int teamGoalsScored, int teamGoalsAgainst);
     vector<Player> getPlayers() const {
         return players;
     }
-
+    void writePlayerStatsToFile(const string filename);
 };
 
 #endif // TEAM_HPP

@@ -18,10 +18,3 @@ void Defenseman::saveToFile(ofstream& outFile) const {
     Player::saveToFile(outFile);
 }
 
-string Defenseman::getStats() const {
-    // Similar implementation as in Forward
-    stringstream ss;
-    ss << Player::getStats() << ", Goals: " << goals << ", Assists: " << assists
-        << ", Points: " << points << ", PIM: " << pim << ", Hits: " << hits;
-    return ss.str();
-}

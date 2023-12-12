@@ -94,23 +94,26 @@ void Team::simulateNextGame() {
     if (userScore > oppScore) {
         cout << "You won the game! Score: " << userScore << "-" << oppScore << endl;
         // Update stats for win
-        updatePlayerStats(userScore);
+        updatePlayerStats(userScore, oppScore);
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
+        goalie.recordWin();
     }
     else if (userScore < oppScore) {
         cout << "You lost the game. Score: " << userScore << "-" << oppScore << endl;
         // Update stats for loss
-        updatePlayerStats(userScore);
+        updatePlayerStats(userScore, oppScore);
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
+        goalie.recordLoss();
     }
     else {
         cout << "The game was a draw. Score: " << userScore << "-" << oppScore << endl;
         // Update stats for draw
-        updatePlayerStats(userScore);
+        updatePlayerStats(userScore, oppScore);
         schedule.markGameAsPlayed();
         schedule.removeNextGame();
+        goalie.recordTie();
     }
     
 }
@@ -155,10 +158,16 @@ int Team::getGameGoals() {
 
 //pre: function that is called after a game with the amount of goals the team scored
 //post: updated player stats incl: goals, assists, gamesplayed after the game
-void Team::updatePlayerStats(int teamGoalsScored) {
+void Team::updatePlayerStats(int teamGoalsScored, int teamGoalsAgainst) {
 
     int goalsDistributed = 0;
 
+    for (Forward& forward : forwards) {
+        forward.incrementGP();
+    }
+    for (Defenseman& defenseman : defensemen) {
+        defenseman.incrementGP();
+    }
     // Distribute goals among players
     while (goalsDistributed < teamGoalsScored) {
         // 65% chance of a forward scoring
@@ -187,6 +196,40 @@ void Team::updatePlayerStats(int teamGoalsScored) {
             }
         }
     }
+
+    //random number of saves 
+    int randShots = rand() % 50 +teamGoalsAgainst;
+
+    goalie.incrementgoalsAgainst(teamGoalsAgainst);
+    goalie.incrementSaves(randShots-teamGoalsAgainst);
+    goalie.incrementGP();
+    goalie.updateSavePercentage();
+    goalie.updateGAA();
   
-    goalie.displayStats();
+    
+}
+
+void Team::writePlayerStatsToFile(const string filename){
+    ofstream outFile(filename, std::ios::app); // Open in append mode
+
+    if (!outFile.is_open()) {
+        cerr << "Failed to open file: " << filename << endl;
+        return;
+    }
+
+    // Write stats for forwards
+    for (const auto& forward : forwards) {
+        forward.saveToFile(outFile);
+    }
+
+    // Write stats for defensemen
+    for (const auto& defenseman : defensemen) {
+        defenseman.saveToFile(outFile);
+    }
+
+    // Write stats for goalie
+    goalie.saveToFile(outFile);
+
+    outFile.close();
+
 }

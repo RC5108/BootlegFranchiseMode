@@ -55,6 +55,6 @@ void Player::displayStats() const {
 }
 
 void Player::saveToFile(std::ofstream& outFile) const {
-    outFile << name << ",#" << number << "," << speed << "," << overall << ","
+    outFile << name << ",#" << number << "," << speed << "," << overall << "," << gamesPlayed << ", "
         << goals << "," << assists << "," << points << "," << pim << "," << hits << " ";
 }
