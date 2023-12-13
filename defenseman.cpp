@@ -8,7 +8,7 @@ Defenseman::Defenseman() : Player("Defenseman") {};
 void Defenseman::displayStats() const {
     Player::displayStats();
     cout << "Goals : " << goals << ", Assists: " << assists << ", Points: " << points;
-    cout << "PIM: " << pim << ", Hits : " << hits << endl;
+    cout << ", PIM: " << pim << ", Hits : " << hits << endl;
 }
 
 // Modify saveToFile from Player class to write 'Defenseman' before 

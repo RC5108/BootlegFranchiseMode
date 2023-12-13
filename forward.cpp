@@ -5,6 +5,7 @@ Forward::Forward(string n, int spd, int num, int ovr, int g, int a, int pim, int
     Player(n, spd, num, ovr, g, a, pim, h, gp, "Forward") {};
 Forward::Forward() : Player("Forward") {};
 
+
 void Forward::displayStats() const {
     Player::displayStats();
     cout << "Goals : " << goals << ", Assists: " << assists << ", Points: " << points;
@@ -16,6 +17,3 @@ void Forward::saveToFile(ofstream& outFile) const {
     Player::saveToFile(outFile);
 
 }
-
-//pre: need to retrieve player's stats as a strucutred data type (string)
-//post: returns a string with the players stats
