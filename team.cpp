@@ -1,6 +1,8 @@
 #include "team.hpp"
 #include "randomname.hpp"
-// Constructor that builds the users team 
+
+//pre: Constructs a team with specific players and a goalie
+//post: Initializes a team with provided player details and schedule
 Team::Team(const string& name, Forward f[], Defenseman d[], Goalie g) {
     schedule.generateSchedule();
     teamName = name;
@@ -21,7 +23,8 @@ Team::Team(const string& name, Forward f[], Defenseman d[], Goalie g) {
     gamesSimulated = 0;
 }
 
-
+//pre: Constructs a team with a given name and random players
+//post: Initializes a team with a name, random players and a schedule
 Team::Team(const string& name) {
     schedule.generateSchedule();
     teamName = name;
@@ -48,6 +51,8 @@ Team::Team(const string& name) {
     gamesSimulated = 0;
 }
 
+//pre: Default constructor
+//post: Initializes a default team with random players and a schedule
 Team::Team() {
     schedule.generateSchedule();
     teamName = "User Team";
@@ -74,6 +79,8 @@ Team::Team() {
     gamesSimulated = 0;
 }
 
+//pre: Displays current team players and their stats
+//post: Outputs player statistics to the console
 void Team::displayTeam() {
     cout << "Forwards:" << endl;
     for (auto& forward : forwards) {
@@ -87,6 +94,8 @@ void Team::displayTeam() {
     goalie.displayStats();
 }
 
+//pre: Accepts a reference to an output file stream
+//post: Saves the current team's player stats to the given file
 void Team::saveToFile(std::ofstream& outFile) const {
     for (auto& forward : forwards) {
         forward.saveToFile(outFile);
@@ -98,6 +107,8 @@ void Team::saveToFile(std::ofstream& outFile) const {
     goalie.saveToFile(outFile);
 }
 
+//pre: Initializes players with unique numbers
+//post: Assigns a unique number to each player on the team
 void Team::initializePlayers() {
     for (Player& player : players) {
         int uniqueNumber = RandomName::generateUniqueNumber(existingNumber);
@@ -106,6 +117,9 @@ void Team::initializePlayers() {
     }
 }
 
+//pre: Accepts a player object
+//post: Adds the player to the team, ensuring a unique number is assigned
+void addPlayer(Player& player);
 void Team::addPlayer(Player& player) {
     int playerNumber = player.getNumber();
     if (existingNumber.find(playerNumber) == existingNumber.end()) {
@@ -118,6 +132,8 @@ void Team::addPlayer(Player& player) {
     players.push_back(player);
 }
 
+//pre: Accepts a number of upcoming games to display
+//post: Prints the schedule of the specified number of upcoming games
 void Team::viewUpcomingGames(int numOfGames) {
     schedule.printUpcomingGames(numOfGames);
 }
@@ -254,6 +270,8 @@ void Team::updatePlayerStats(int teamGoalsScored, int teamGoalsAgainst) {
 
 }
 
+//pre: Accepts a filename for saving stats
+//post: Writes player stats to the specified file
 void Team::writePlayerStatsToFile(const string filename) {
     ofstream outFile(filename, std::ios::out); // Open in overwrite mode
 
@@ -279,6 +297,8 @@ void Team::writePlayerStatsToFile(const string filename) {
 
 }
 
+//pre: Accepts user team and other teams in the league
+//post: Displays the current standings of all teams
 void Team::displayStandings(const Team& userTeam, const Team& redTeam, const Team& blueTeam, const Team& greenTeam) {
     cout << "Standings: " << endl;
     vector<TeamData> teams = {

@@ -1,10 +1,13 @@
 #include "defenseman.hpp"
 
+//Constructors
 Defenseman::Defenseman(string n, int spd, int num, int ovr) : Player(n, spd, num, ovr, "Defenseman") {}
 Defenseman::Defenseman(string n, int spd, int num, int ovr, int g, int a, int pim, int h, int gp) :
     Player(n, spd, num, ovr, g, a, pim, h, gp, "Defenseman") {};
 Defenseman::Defenseman() : Player("Defenseman") {};
 
+//pre: Displays the stats of a defenseman player
+//post: Outputs the defenseman player's statistics to the console
 void Defenseman::displayStats() const {
     Player::displayStats();
     cout << "Goals : " << goals << ", Assists: " << assists << ", Points: " << points;

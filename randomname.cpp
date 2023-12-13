@@ -2,8 +2,10 @@
 
 
 
-std::set<string> RandomName::usedNames = {};
+set<string> RandomName::usedNames = {};
 
+//pre: Generates a random name from a predefined list
+//post: Returns a unique name that hasn't been used in the current context
 string RandomName::getRandomName() {
 
     static vector<string> names = {
@@ -34,6 +36,8 @@ string RandomName::getRandomName() {
     return name;
 }
 
+//pre: Generates a unique number not present in the given set
+//post: Returns a unique number between 1 and 98
 int RandomName::generateUniqueNumber(const std::set<int>& existingNumbers) {
     srand(static_cast<unsigned int>(std::time(nullptr)));
     // Infinite loop: Keep generating numbers until we find a unique one
